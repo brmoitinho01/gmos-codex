@@ -1,0 +1,6 @@
+import { acceptInvitationAction } from "../access-actions";
+
+export default async function InvitationPage({ searchParams }: { searchParams: Promise<{ token?: string; erro?: string }> }) {
+  const params = await searchParams;
+  return <main className="login-shell"><div className="brand-block"><span className="eyebrow">GMOS · CONVITE</span><h1>Seu acesso</h1><p>Defina sua identidade individual. O convite funciona uma única vez e pode expirar.</p></div><form action={acceptInvitationAction} className="card login-form"><h2>Aceitar convite</h2>{params.erro && <p className="error" role="alert">{params.erro === "senhas" ? "As senhas não coincidem." : "O convite é inválido, venceu ou já foi utilizado."}</p>}<input type="hidden" name="token" value={params.token ?? ""}/><label>Nome completo<input name="name" minLength={2} required/></label><label>Senha<input name="password" type="password" minLength={12} autoComplete="new-password" required/></label><label>Confirmar senha<input name="passwordConfirmation" type="password" minLength={12} autoComplete="new-password" required/></label><button disabled={!params.token}>Definir senha e ativar acesso</button><a href="/login">Voltar ao login</a></form></main>;
+}
